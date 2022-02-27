@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+   commands:
+     - echo "Installing HashiCorp Packer..."
+     - curl -qL -o packer.zip https://releases.hashicorp.com/packer/1.7.10/packer_1.7.10_linux_amd64.zip && unzip packer.zip
+     - echo "Installing jq..."
+     - curl -qL -o jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x ./jq
+     - export PACKER_LOG=1
+     - echo $PACKER_LOG
+  pre_build:
+   commands:
+     - echo "Validating Packer Template"
+     - ./packer validate aws_ubuntu.pkr.hcl
+  build:
+    commands:
+      - echo "Building Packer AMI"
+      - ./packer build aws_ubuntu.pkr.hcl
+  post_build:
+    commands:
+      - echo "HashiCorp Packer build completed on `date`"
