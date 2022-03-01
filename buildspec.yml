@@ -12,6 +12,7 @@ phases:
   pre_build:
    commands:
      - echo "Validating Packer Template"
+     - ./packer init
      - ./packer validate aws_ubuntu.pkr.hcl
   build:
     commands:
