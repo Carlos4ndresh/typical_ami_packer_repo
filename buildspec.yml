@@ -16,8 +16,9 @@ phases:
      - ./packer validate aws_ubuntu.pkr.hcl
   build:
     commands:
+      - aws s3 ls s3://ami-packer-pipeline-artifact-store
       - echo "Building Packer AMI"
       - ./packer build aws_ubuntu.pkr.hcl
   post_build:
     commands:
-      - echo "HashiCorp Packer build completed on `date`"
+      - echo "HashiCorp Packer build completed"
