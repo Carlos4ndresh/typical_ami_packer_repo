@@ -18,7 +18,7 @@ phases:
     commands:
       - echo "Building Packer AMI"
       - ./packer build -machine-readable aws_ubuntu.pkr.hcl | tee build.log
-      - "export AMI_ID=grep 'artifact,0,id' build.log | cut -d, -f6 | cut -d: -f2"
+      - "export AMI_IENT=$(grep 'artifact,0,id' build.log | cut -d, -f6 | cut -d: -f2)"
   post_build:
     commands:
       - echo "HashiCorp Packer build completed"
