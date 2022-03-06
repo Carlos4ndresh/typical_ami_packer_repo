@@ -30,6 +30,19 @@ source "amazon-ebs" "ubuntu" {
     owners      = ["099720109477"]
   }
   ssh_username = "ubuntu"
+  tags = {
+    Name          = "${var.ami_prefix}-${local.timestamp}"
+    Release       = "Latest"
+    Base_AMI_ID   = "{{.SourceAMI}}"
+    Base_AMI_Name = "{{.SourceAMIName}}"
+    Owner         = "cherrera"
+  }
+  run_tags = {
+    Name          = "Packer Builder EC2"
+    Base_AMI_ID   = "{{.SourceAMI}}"
+    Base_AMI_Name = "{{.SourceAMIName}}"
+
+  }
 }
 
 build {
