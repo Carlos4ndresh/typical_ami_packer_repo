@@ -31,4 +31,4 @@ phases:
 artifacts:
   files:
    - ami_builder_event.json
-   - build.logami_builder_event.json
+   - build.logami_builder_event.json    #  - echo $PACKER_LOG
