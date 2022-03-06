@@ -9,3 +9,6 @@ crash.log
 
 
 .idea/*
+
+*.terraform/
+**.terraform.lock.hcl
