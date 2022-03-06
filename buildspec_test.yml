@@ -12,12 +12,12 @@ phases:
   pre_build:
    commands:
      - echo "Validating Packer Template"
-     - ./packer init .
-     - ./packer validate aws_ubuntu.pkr.hcl
+     - ./packer init aws_ubuntu_test.pkr.hck
+     - ./packer validate aws_ubuntu_test.pkr.hck
   build:
     commands:
       - echo "Building Packer AMI"
-      - ./packer build -machine-readable aws_ubuntu.pkr.hcl | tee build.log
+      - ./packer build -machine-readable aws_ubuntu_test.pkr.hck | tee build.log
       - "export AMI_IDENT=$(grep 'artifact,0,id' build.log | cut -d, -f6 | cut -d: -f2)"
       - echo $AMI_IDENT
   post_build:
