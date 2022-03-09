@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  parameter-store:
+    PACKER_GITHUB_API_TOKEN: "/demo/ec2/gh_token"
+
 phases:
   install:
    commands:
