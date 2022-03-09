@@ -15,11 +15,11 @@ phases:
    commands:
      - echo "Validating Packer Template"
      - ./packer init .
-     - ./packer validate aws_ubuntu_test.pkr.hck
+     - ./packer validate aws_ubuntu_test.pkr.hcl
   build:
     commands:
       - echo "Building Packer AMI"
-      - ./packer build -machine-readable aws_ubuntu_test.pkr.hck | tee build.log
+      - ./packer build -machine-readable aws_ubuntu_test.pkr.hcl | tee build.log
   post_build:
     commands:
       - echo "HashiCorp Packer build completed"
