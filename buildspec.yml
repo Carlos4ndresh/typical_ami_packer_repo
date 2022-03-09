@@ -7,8 +7,6 @@ phases:
      - curl -qL -o packer.zip https://releases.hashicorp.com/packer/1.8.0/packer_1.8.0_linux_amd64.zip && unzip packer.zip
      - echo "Installing jq..."
      - curl -qL -o jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x ./jq
-    #  - export PACKER_LOG=1
-    #  - echo $PACKER_LOG
   pre_build:
    commands:
      - echo "Validating Packer Template"
@@ -25,10 +23,10 @@ phases:
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
       # Packer doesn't return non-zero status; we must do that if Packer build failed
       - test -s ami_id.txt || exit 1
-      - sed -i.bak "s/<<AMI-ID>>/$(cat ami_id.txt)/g" ami_builder_event.json
+      # - sed -i.bak "s/<<AMI-ID>>/$(cat ami_id.txt)/g" ami_builder_event.json
       # - aws events put-events --entries file://ami_builder_event.json
       - echo "HashiCorp Packer build completed"
 artifacts:
   files:
-   - ami_builder_event.json
-   - build.logami_builder_event.json    #  - echo $PACKER_LOG
+  #  - ami_builder_event.json
+   - build.log
