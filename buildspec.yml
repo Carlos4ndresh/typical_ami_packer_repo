@@ -32,4 +32,4 @@ phases:
       - echo "HashiCorp Packer build completed"
 artifacts:
   files:
-   - ami_id.txtl
+   - ami_id.txt
