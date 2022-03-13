@@ -152,16 +152,65 @@ resource "aws_codepipeline" "ami_pipeline" {
   stage {
     name = "Build_AMI"
     action {
-      name            = "Build_AMI"
-      owner           = "AWS"
-      provider        = "CodeBuild"
-      category        = "Build"
-      input_artifacts = ["source_output"]
-      version         = "1"
+      name             = "Build_AMI"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      category         = "Build"
+      input_artifacts  = ["source_output"]
+      output_artifacts = ["build_output"]
+      version          = "1"
       configuration = {
         "ProjectName" = aws_codebuild_project.build_ami_packer.name
       }
     }
+
+    action {
+      name     = "ManualApproval"
+      category = "Approval"
+      owner    = "AWS"
+      version  = "1"
+      provider = "Manual"
+      configuration = {
+        "CustomData" = "Approve this AMI to be stored in the SSM Parameter For new EC2s"
+      }
+    }
+  }
+
+  stage {
+    name = "ReleaseAMI"
+    action {
+      name            = "StoreAMISSMParameter"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      input_artifacts = ["build_output"]
+      version         = "1"
+      configuration = {
+        "ProjectName" = ""
+      }
+    }
+  }
+
+}
+
+resource "aws_codebuild_project" "store_ssm_parameter" {
+  name          = "store-ssm-parameter"
+  description   = "project to take ami id and store it on a SSM parameter"
+  service_role  = aws_iam_role.codebuild_assume_role.arn
+  build_timeout = "60"
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    compute_type = "BUILD_GENERAL1_SMALL"
+    image        = "aws/codebuild/standard:5.0"
+    type         = "LINUX_CONTAINER"
+  }
+
+  source {
+    type      = "CODEPIPELINE"
+    buildspec = "buildspec_ssmt/buildspec_test..yml"
   }
 
 }

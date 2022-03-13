@@ -55,7 +55,12 @@
     },
     {
         "Sid": "SSMParameters",
-        "Action": ["ssm:GetParameters"],
+        "Action": [
+            "ssm:GetParameter",
+            "ssm:GetParameterHistory",
+            "ssm:GetParametersByPath",
+            "ssm:PutParameter"
+            ],
         "Effect": "Allow",
         "Resource": ["*"]
     }

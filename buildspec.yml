@@ -32,5 +32,4 @@ phases:
       - echo "HashiCorp Packer build completed"
 artifacts:
   files:
-  #  - ami_builder_event.json
-   - build.log
+   - ami_id.txt
