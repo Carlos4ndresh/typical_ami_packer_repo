@@ -34,7 +34,8 @@
             ],
             "Resource": [
                 "${codebuild_project}",
-                "${codebuild_test_project}"
+                "${codebuild_test_project}",
+                "${codebuild_ssm_project}"
             ],
             "Effect": "Allow"
         },

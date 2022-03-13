@@ -25,7 +25,8 @@
             "Effect": "Allow",
             "Resource": [
                 "${codebuild_project}",
-                "${codebuild_test_project}"
+                "${codebuild_test_project}",
+                "${codebuild_ssm_project}"
             ]
         },
         {
@@ -57,6 +58,7 @@
         "Sid": "SSMParameters",
         "Action": [
             "ssm:GetParameter",
+            "ssm:GetParameters",
             "ssm:GetParameterHistory",
             "ssm:GetParametersByPath",
             "ssm:PutParameter"

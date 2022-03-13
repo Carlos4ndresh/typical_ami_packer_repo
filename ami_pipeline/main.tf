@@ -24,6 +24,7 @@ data "template_file" "codepipeline_policy_template" {
     codebuild_project      = aws_codebuild_project.build_ami_packer.arn
     codebuild_test_project = aws_codebuild_project.validate_packer_build.arn
     codestar_conn          = data.aws_codestarconnections_connection.github_connection.arn
+    codebuild_ssm_project  = aws_codebuild_project.store_ssm_parameter.arn
   }
 }
 
@@ -64,6 +65,7 @@ data "template_file" "codebuild_policy_template" {
     codebuild_project      = aws_codebuild_project.build_ami_packer.arn
     codebuild_test_project = aws_codebuild_project.validate_packer_build.arn
     codestar_conn          = data.aws_codestarconnections_connection.github_connection.arn
+    codebuild_ssm_project  = aws_codebuild_project.store_ssm_parameter.arn
   }
 }
 
@@ -181,11 +183,12 @@ resource "aws_codepipeline" "ami_pipeline" {
     action {
       name            = "StoreAMISSMParameter"
       owner           = "AWS"
+      category        = "Build"
       provider        = "CodeBuild"
       input_artifacts = ["build_output"]
       version         = "1"
       configuration = {
-        "ProjectName" = ""
+        "ProjectName" = aws_codebuild_project.store_ssm_parameter.name
       }
     }
   }
@@ -210,7 +213,7 @@ resource "aws_codebuild_project" "store_ssm_parameter" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "buildspec_ssmt/buildspec_test..yml"
+    buildspec = "buildspec_ssm.yml"
   }
 
 }

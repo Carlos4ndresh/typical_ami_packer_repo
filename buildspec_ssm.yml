@@ -9,4 +9,4 @@ phases:
       - echo "Storing AMI-ID in SSM Parameter Store"
   post_build:
     commands:
-      - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
+      - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txtl
