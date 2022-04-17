@@ -181,10 +181,11 @@ resource "aws_codepipeline" "ami_pipeline" {
   stage {
     name = "ReleaseAMI"
     action {
-      name            = "StoreAMISSMParameter"
-      owner           = "AWS"
-      category        = "Build"
-      provider        = "CodeBuild"
+      name     = "StoreAMISSMParameter"
+      owner    = "AWS"
+      category = "Build"
+      provider = "CodeBuild"
+      # include source from stage one 
       input_artifacts = ["build_output"]
       version         = "1"
       configuration = {
