@@ -186,7 +186,7 @@ resource "aws_codepipeline" "ami_pipeline" {
       category = "Build"
       provider = "CodeBuild"
       # include source from stage one 
-      input_artifacts = ["build_output"]
+      input_artifacts = ["source_output", "build_output"]
       version         = "1"
       configuration = {
         "ProjectName" = aws_codebuild_project.store_ssm_parameter.name
