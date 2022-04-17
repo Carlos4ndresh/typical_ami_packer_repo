@@ -214,7 +214,7 @@ resource "aws_codebuild_project" "store_ssm_parameter" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "buildspec_ssm.yml"
+    buildspec = "validate/buildspec_ssm.yml"
   }
 
 }
