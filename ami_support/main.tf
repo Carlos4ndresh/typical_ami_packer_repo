@@ -30,7 +30,8 @@ resource "aws_iam_role" "lambda_role" {
 }
 
 resource "aws_lambda_function" "init_test_ec2" {
-  function_name = ""
+  function_name = "test_ami"
   architectures = ["x86_64"]
   role          = aws_iam_role.lambda_role.arn
+  handler       = "test_ami.lambda_handler"
 }

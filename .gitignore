@@ -47,3 +47,4 @@ override.tf.json
 # example: *tfplan*
 *.idea/*
 ami_pipeline/token.tfvars
+.vscode/settings.json
