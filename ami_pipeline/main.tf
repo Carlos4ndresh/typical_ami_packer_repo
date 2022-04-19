@@ -155,6 +155,7 @@ resource "aws_codepipeline" "ami_pipeline" {
     name = "Build_AMI"
     action {
       name             = "Build_AMI"
+      run_order        = 1
       owner            = "AWS"
       provider         = "CodeBuild"
       category         = "Build"
@@ -167,31 +168,30 @@ resource "aws_codepipeline" "ami_pipeline" {
     }
 
     action {
-      name     = "ManualApproval"
-      category = "Approval"
-      owner    = "AWS"
-      version  = "1"
-      provider = "Manual"
+      name      = "ManualApproval"
+      run_order = 2
+      category  = "Approval"
+      owner     = "AWS"
+      version   = "1"
+      provider  = "Manual"
       configuration = {
         "CustomData" = "Approve this AMI to be stored in the SSM Parameter For new EC2s"
       }
     }
-  }
 
-  stage {
-    name = "ReleaseAMI"
     action {
-      name     = "StoreAMISSMParameter"
-      owner    = "AWS"
-      category = "Build"
-      provider = "CodeBuild"
-      # include source from stage one 
-      input_artifacts = ["build_output"]
+      name            = "Release_AMI"
+      run_order       = 3
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      category        = "Build"
+      input_artifacts = ["source_output", "build_output"]
       version         = "1"
       configuration = {
         "ProjectName" = aws_codebuild_project.store_ssm_parameter.name
       }
     }
+
   }
 
 }
