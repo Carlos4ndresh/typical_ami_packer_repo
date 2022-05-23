@@ -10,7 +10,7 @@ phases:
   build:
     commands:
       - echo "Storing AMI-ID in SSM Parameter Store"
-      - aws ssm put-parameter --name "/demo/ec2/ami/latest" --value $AMI_IDEN
+      - aws ssm put-parameter --name "/demo/ec2/ami/latest" --value $AMI_IDEN --overwrite
   post_build:
     commands:
       - aws ssm get-parameter --name "/demo/ec2/ami/latest"
