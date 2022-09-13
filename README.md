@@ -9,4 +9,7 @@ A Demo on how to integrate packer AMI building within CodePipeline/CodeBuild in 
 ## Pipeline structure
 
 
-## Outcomes|
+## Outcome
+
+
+## Next steps
